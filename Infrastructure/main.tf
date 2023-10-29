@@ -1,7 +1,7 @@
 
 #Creating S3
 resource "aws_s3_bucket" "main_bucket" {
-  bucket = "inf8102-final-project-2023-fall"
+  bucket = "inf8102-final-project-2023-10-29"
 
   tags = {
     Name        = "final-project"
@@ -113,6 +113,15 @@ data "aws_iam_policy_document" "main_bucket" {
       variable = "AWS:SourceArn"
       values   = [aws_cloudfront_distribution.site_access.arn]
 
+    }
+  }
+}
+resource "aws_cloudfront_monitoring_subscription" "site_access" {
+  distribution_id = aws_cloudfront_distribution.site_access.id
+
+  monitoring_subscription {
+    realtime_metrics_subscription_config {
+      realtime_metrics_subscription_status = "Enabled"
     }
   }
 }
