@@ -15,8 +15,15 @@
         <textarea matInput placeholder="Enter the description"></textarea>
       </mat-form-field>
 
+      <input
+        type="file"
+        style="display: none"
+        #fileInput
+        (change)="onFileSelected($event)"
+      />
+
       <div class="button-container">
-        <button mat-raised-button color="accent">
+        <button mat-raised-button color="accent" (click)="fileInput.click()">
           <mat-icon>cloud_upload</mat-icon> Choose File
         </button>
       </div>
