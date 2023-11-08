@@ -1,0 +1,56 @@
+.content {
+  display: flex;
+  height: calc(100vh - 64px);
+  align-items: center;
+  justify-content: center;
+}
+
+mat-card {
+  width: 400px;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.button-container > button,
+.button-container > .file-name-display {
+  width: 100%;
+}
+
+.file-name-display {
+  display: flex;
+  justify-content: center;
+}
+
+.custom-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 16px;
+  background-color: #e0e0e0; /* Grey background */
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 0.8125rem;
+  color: rgba(0, 0, 0, 0.87);
+  box-sizing: border-box;
+  border: none;
+  cursor: default;
+}
+
+.material-icons.chip-icon {
+  font-size: 1rem; /* Adjust icon size as needed */
+  color: rgba(0, 0, 0, 0.54); /* Icon color */
+  margin-right: 4px;
+}
+
+.chip-item {
+  margin: auto;
+}

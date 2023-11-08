@@ -1,0 +1,50 @@
+<mat-toolbar color="primary">
+  <span>S3Drive</span>
+</mat-toolbar>
+
+<div class="content">
+  <mat-card>
+    <mat-card-content>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Enter the name" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="Enter the description"></textarea>
+      </mat-form-field>
+
+      <input
+        type="file"
+        id="fileInput"
+        style="display: none"
+        #fileInput
+        (change)="onFileSelected($event)"
+      />
+
+      <div class="button-container">
+        <button mat-raised-button color="accent" (click)="fileInput.click()">
+          <mat-icon>cloud_upload</mat-icon> Choose File
+        </button>
+
+        <div *ngIf="selectedFile" class="file-name-display">
+          <div class="custom-chip">
+            <i class="material-icons chip-icon chip-item">attach_file</i>
+            <span class="chip-item">{{ selectedFile.name }}</span>
+          </div>
+        </div>
+
+        <button mat-raised-button color="warn" (click)="clearFile()">
+          <mat-icon>clear</mat-icon> Clear
+        </button>
+        <button mat-raised-button color="primary" (click)="uploadFile()">
+          <mat-icon>file_upload</mat-icon> Upload File
+        </button>
+        <button mat-raised-button color="primary" (click)="checkForHIPAA()">
+          <mat-icon>check</mat-icon> Check for HIPAA
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
