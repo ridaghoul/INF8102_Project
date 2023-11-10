@@ -1,4 +1,17 @@
 #!/bin/bash
+
+
+# Change le répertoire de travail vers le répertoire 'client'
+cd ../client
+
+
+# Run the ng build command
+ng build
+
+# Change the working directory to /home/yaya/INF8102_Project/Infrastructure/INF8102_Project/Infrastructure
+cd ../Infrastructure
+
+# Run Terraform commands
 terraform init
 terraform plan
 terraform apply
@@ -29,4 +42,3 @@ done
 
 # Créez un tableau JSON avec un élément "status" pour indiquer le résultat
 echo '{"status": "Téléversement terminé"}'
-
