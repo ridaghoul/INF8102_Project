@@ -104,12 +104,24 @@ export class AppComponent {
       return;
     }
     this.S3Drive.downloadFile(this.selectedFileDownload).subscribe({
-      next: (blob) => {
-        window.open(window.URL.createObjectURL(blob));
+      next: (presignedUrl) => {
+        this.openDownloadPrompt(
+          presignedUrl,
+          this.selectedFileDownload as string,
+        );
       },
       error: () => {
         window.alert("Download failed!");
       },
     });
+  }
+
+  private openDownloadPrompt(url: string, filename: string) {
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   }
 }

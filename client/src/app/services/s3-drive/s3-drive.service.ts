@@ -52,15 +52,6 @@ export class S3DriveService {
           console.error("POST download-presigned-url failed:", error);
           return error;
         }),
-        switchMap((response: any) => {
-          return this.http.get(response.body.presignedUrl, {
-            responseType: "blob",
-          });
-        }),
-        catchError((error) => {
-          console.error("Using download presignedUrl failed:", error);
-          return error;
-        }),
       );
   }
 }

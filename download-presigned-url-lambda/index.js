@@ -8,6 +8,7 @@ exports.handler = async (event) => {
       Bucket: "inf8102-final-project-2023-11-07",
       Key: fileName,
       Expires: 60,
+      ResponseContentDisposition: `attachment; filename="${fileName}"`,
     });
     return {
       statusCode: 200,
