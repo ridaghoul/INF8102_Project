@@ -1,50 +1,81 @@
 <mat-toolbar color="primary">
-  <span>S3Drive</span>
+  <span>{{ title }}</span>
 </mat-toolbar>
 
-<div class="content">
-  <mat-card>
-    <mat-card-content>
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Name</mat-label>
-        <input matInput placeholder="Enter the name" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Description</mat-label>
-        <textarea matInput placeholder="Enter the description"></textarea>
-      </mat-form-field>
-
-      <input
-        type="file"
-        id="fileInput"
-        style="display: none"
-        #fileInput
-        (change)="onFileSelected($event)"
-      />
-
-      <div class="button-container">
-        <button mat-raised-button color="accent" (click)="fileInput.click()">
-          <mat-icon>cloud_upload</mat-icon> Choose File
-        </button>
-
-        <div *ngIf="selectedFile" class="file-name-display">
-          <div class="custom-chip">
-            <i class="material-icons chip-icon chip-item">attach_file</i>
-            <span class="chip-item">{{ selectedFile.name }}</span>
+<div class="container">
+  <div class="cards-container">
+    <div class="download-container">
+      <mat-card class="card-buttons">
+        <mat-card-content>
+          <div class="button-container">
+            <button mat-raised-button color="primary" (click)="downloadFile()">
+              <mat-icon>file_download</mat-icon> Download File
+            </button>
+            <div *ngIf="selectedFileDownload" class="file-name-display">
+              <div class="custom-chip">
+                <i class="material-icons chip-icon">file_download</i>
+                <span class="chip-item">{{ selectedFileDownload }}</span>
+              </div>
+            </div>
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="clearFileDownload()"
+            >
+              <mat-icon>clear</mat-icon> Clear
+            </button>
           </div>
-        </div>
-
-        <button mat-raised-button color="warn" (click)="clearFile()">
-          <mat-icon>clear</mat-icon> Clear
-        </button>
-        <button mat-raised-button color="primary" (click)="uploadFile()">
-          <mat-icon>file_upload</mat-icon> Upload File
-        </button>
-        <button mat-raised-button color="primary" (click)="checkForHIPAA()">
-          <mat-icon>check</mat-icon> Check for HIPAA
-        </button>
+        </mat-card-content>
+      </mat-card>
+      <div class="list-title" *ngIf="files$ | async">
+        <mat-icon class="dl-icon">cloud_download</mat-icon>Choose File to
+        Download
       </div>
-    </mat-card-content>
-  </mat-card>
+      <mat-card class="card-files">
+        <mat-card-content>
+          <mat-list *ngIf="files$ | async as files" class="file-list">
+            <mat-list-item
+              *ngFor="let file of files"
+              (click)="selectFileDownload(file)"
+            >
+              {{ file }}
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <mat-card class="card-buttons">
+      <mat-card-content>
+        <input
+          type="file"
+          id="fileInput"
+          style="display: none"
+          #fileInput
+          (change)="onFileSelectedUpload($event)"
+        />
+        <div class="button-container">
+          <button mat-raised-button color="primary" (click)="uploadFile()">
+            <mat-icon>file_upload</mat-icon> Upload File
+          </button>
+
+          <div *ngIf="selectedFileUpload" class="file-name-display">
+            <div class="custom-chip">
+              <i class="material-icons chip-icon chip-item">attach_file</i>
+              <span class="chip-item">{{ selectedFileUpload.name }}</span>
+            </div>
+          </div>
+          <button mat-raised-button color="warn" (click)="clearFileUpload()">
+            <mat-icon>clear</mat-icon> Clear
+          </button>
+
+          <button mat-raised-button color="accent" (click)="fileInput.click()">
+            <mat-icon>cloud_upload</mat-icon> Choose File To Upload
+          </button>
+          <button mat-raised-button color="primary" (click)="checkCompliance()">
+            <mat-icon>check</mat-icon> Check For Compliance
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>

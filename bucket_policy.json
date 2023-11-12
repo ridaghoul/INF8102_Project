@@ -1,0 +1,24 @@
+{
+  "Version": "2012-10-17",
+  "Id": "Policy1699546469202",
+  "Statement": [
+    {
+      "Sid": "Stmt1699546455550",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::260281541105:role/LabRole"
+      },
+      "Action": ["s3:PutObject", "s3:GetObject"],
+      "Resource": "arn:aws:s3:::inf8102-final-project-2023-11-07/*"
+    },
+    {
+      "Sid": "StmtListBucket",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::260281541105:role/LabRole"
+      },
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::inf8102-final-project-2023-11-07"
+    }
+  ]
+}

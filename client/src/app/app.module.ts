@@ -13,6 +13,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { HttpClientModule } from "@angular/common/http";
 import { MatChipsModule } from "@angular/material/chips";
+import { MatListModule } from "@angular/material/list";
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,6 +29,7 @@ import { MatChipsModule } from "@angular/material/chips";
     MatFormFieldModule,
     HttpClientModule,
     MatChipsModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

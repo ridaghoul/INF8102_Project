@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from "@angular/core";
-import { HIPAAComplianceService } from "@services/pii-compliance/hipaa-compliance.service";
+import { ComplianceService } from "@services/compliance/compliance.service";
 import { S3DriveService } from "@services/s3-drive/s3-drive.service";
+import { Observable, of, throwError } from "rxjs";
 
 @Component({
   selector: "app-root",
@@ -8,78 +9,107 @@ import { S3DriveService } from "@services/s3-drive/s3-drive.service";
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
-  title = "S3Drive";
-  selectedFile: File | null = null;
-  isHIPAACompliant = false;
+  title = "OnlyTextS3Drive";
+  files$: Observable<string[]>;
+  selectedFileUpload: File | null = null;
+  isCompliant = false;
+  selectedFileDownload: string | null = null;
   @ViewChild("fileInput") fileInput!: ElementRef<HTMLInputElement>;
+
   constructor(
     private S3Drive: S3DriveService,
-    private HIPAAService: HIPAAComplianceService,
-  ) {}
+    private complianceService: ComplianceService,
+  ) {
+    this.files$ = this.S3Drive.listFiles();
+  }
 
-  onFileSelected(event: any) {
+  selectFileDownload(fileName: string) {
+    this.selectedFileDownload = fileName;
+  }
+
+  onFileSelectedUpload(event: any) {
     const file = event.target.files[0];
     if (file) {
-      this.selectedFile = file;
+      this.selectedFileUpload = file;
     }
+  }
+
+  clearFileDownload() {
+    this.selectedFileDownload = null;
   }
 
   uploadFile() {
-    if (!this.selectedFile) {
+    if (!this.selectedFileUpload) {
       window.alert("Please select a file to upload");
       return;
     }
-    // if (!this.isHIPAACompliant) {
+    // if (!this.isCompliant) {
     //   window.alert(
-    //     "Please verify HIPAA compliance before uploading.",
+    //     "Please verify compliance before uploading.",
     //   );
     //   return;
     // }
-    this.S3Drive.uploadFile(this.selectedFile as File).subscribe({
-      next: (response) => {
+    this.S3Drive.uploadFile(this.selectedFileUpload as File).subscribe({
+      next: () => {
         window.alert("Upload successful!");
-        console.log("Upload successful!", response);
+        this.files$ = this.S3Drive.listFiles();
       },
-      error: (error) => {
+      error: () => {
         window.alert("Upload failed!");
-        console.error("Upload failed:", error);
       },
     });
-    this.selectedFile = null;
+    this.selectedFileUpload = null;
     this.fileInput.nativeElement.value = "";
   }
 
-  clearFile() {
-    this.selectedFile = null;
+  clearFileUpload() {
+    this.selectedFileUpload = null;
     this.fileInput.nativeElement.value = "";
   }
 
-  checkForHIPAA(): void {
-    if (!this.selectedFile) {
-      window.alert("Please select a file to check for HIPAA compliance");
+  checkCompliance(): void {
+    if (!this.selectedFileUpload) {
+      window.alert("Please select a file to check for compliance");
       return;
     }
     const reader = new FileReader();
     reader.onload = (e) => {
       const textContent = reader.result as string;
-      this.HIPAAService.checkForHIPAACompliance(textContent).subscribe({
-        next: (complianceReport) => {
-          if (complianceReport.containsSSN || complianceReport.containsCC) {
-            this.isHIPAACompliant = true;
+      this.complianceService.checkForCompliance(textContent).subscribe({
+        next: (isCompliant) => {
+          if (isCompliant) {
+            this.isCompliant = true;
             window.alert(
-              "The file is not HIPAA compliant. Please verify it before uploading.",
+              "The file is compliant. You can proceed with the upload.",
             );
           } else {
-            this.isHIPAACompliant = false;
+            this.isCompliant = false;
             window.alert(
-              "The file is HIPAA compliant . You can proceed with the upload.",
+              "The file is not compliant. Please verify it before uploading.",
             );
           }
         },
-        error: (error: any) =>
-          console.error("Error in HIPAA compliance check", error),
+        error: (error: any) => {
+          window.alert("Compliance check failed!");
+          console.error("Error in compliance check:", error);
+        },
       });
     };
-    reader.readAsText(this.selectedFile);
+    reader.readAsText(this.selectedFileUpload);
+  }
+
+  downloadFile() {
+    if (!this.selectedFileDownload) {
+      window.alert("Please select a file to download");
+      return;
+    }
+    this.S3Drive.downloadFile(this.selectedFileDownload).subscribe({
+      next: (blob) => {
+        window.open(window.URL.createObjectURL(blob));
+      },
+      error: () => {
+        window.alert("Download failed!");
+      },
+    });
   }
 }
