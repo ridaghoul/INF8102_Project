@@ -1,7 +1,7 @@
 
 #Creating S3
 resource "aws_s3_bucket" "main_bucket" {
-  bucket = "inf8102-final-project-2023-10-29"
+  bucket = "inf8102-final-project-2023-11-09"
 
   tags = {
     Name        = "final-project"
@@ -33,7 +33,7 @@ resource "aws_s3_bucket_versioning" "main_bucket" {
     status = "Enabled"
   }
 }
-
+/*
 resource "aws_s3_object" "content" {
 
   depends_on = [aws_s3_bucket.main_bucket]
@@ -44,6 +44,21 @@ resource "aws_s3_object" "content" {
   server_side_encryption = "AES256"
   content_type           = "text/html"
 }
+*/
+
+/*
+data "external" "upload_files" {
+  program = ["bash", "${path.module}/upload-script.sh"]
+}
+
+# Attendez que le script ait terminé
+resource "null_resource" "wait" {
+  triggers = {
+    upload_files_result = data.external.upload_files.result["status"]
+  }
+}
+*/
+
 
 resource "aws_cloudfront_origin_access_control" "site_access" {
   name                              = "cf_final_project"
@@ -125,3 +140,4 @@ resource "aws_cloudfront_monitoring_subscription" "site_access" {
     }
   }
 }
+
