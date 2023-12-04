@@ -6,7 +6,7 @@ import { Observable, catchError, map, switchMap, tap } from "rxjs";
   providedIn: "root",
 })
 export class S3DriveService {
-  private API_ENDPOINT = "https://d30ubrh652tswz.cloudfront.net";
+  private API_ENDPOINT = "https://8tuu4wsgnf.execute-api.us-east-1.amazonaws.com/dev";
 
   constructor(private http: HttpClient) {}
 
