@@ -1,7 +1,7 @@
 # INF8102_Project
 Final project for INF8102.
 Pour excuter le code 
-1.	Clonez le référentiel du projet depuis GitLab sur votre machine locale. 
+1.	Clonez le référentiel du projet depuis Github sur votre machine locale. 
 2.	Mettez à jour les variables d'environnement dans le fichier « ~/.aws/credentials » avec les valeurs précises pour AWS ACCESS KEY ID, AWS SECRET ACCESS KEY et AWS SESSION TOKEN.
 3.	Mettez à jour le variables « lambda_role_arn »  dans le fichier variables dans les dossiers 0_Infrastructure et Infrastructure.
 
