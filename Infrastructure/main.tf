@@ -33,31 +33,6 @@ resource "aws_s3_bucket_versioning" "main_bucket" {
     status = "Enabled"
   }
 }
-/*
-resource "aws_s3_object" "content" {
-
-  depends_on = [aws_s3_bucket.main_bucket]
-
-  bucket                 = aws_s3_bucket.main_bucket.bucket
-  key                    = "index.html"
-  source                 = "./index.html"
-  server_side_encryption = "AES256"
-  content_type           = "text/html"
-}
-*/
-
-/*
-data "external" "upload_files" {
-  program = ["bash", "${path.module}/upload-script.sh"]
-}
-
-# Attendez que le script ait terminé
-resource "null_resource" "wait" {
-  triggers = {
-    upload_files_result = data.external.upload_files.result["status"]
-  }
-}
-*/
 
 
 resource "aws_cloudfront_origin_access_control" "site_access" {

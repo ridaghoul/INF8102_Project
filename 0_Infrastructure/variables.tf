@@ -21,3 +21,8 @@ terraform {
 provider "aws" {
   region = "us-east-1"
 }
+variable "lambda_role_arn" {
+  description = "ARN du rôle IAM pour la fonction Lambda"
+  type        = string
+  default     = "arn:aws:iam::313226341769:role/LabRole"  # Remplacez cela par votre ARN de rôle
+}

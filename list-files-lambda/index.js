@@ -3,7 +3,7 @@ const s3 = new AWS.S3();
 
 exports.handler = async (event) => {
   const params = {
-    Bucket: "inf8102-final-project-2023-11-07",
+    Bucket: "websiteinf8102-13",
   };
 
   try {

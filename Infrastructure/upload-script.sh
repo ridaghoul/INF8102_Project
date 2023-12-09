@@ -6,6 +6,10 @@ cd ../client
 
 
 # Run the ng build command
+npm install
+npm install -g @angular/cli
+ng build
+
 ng build
 
 # Change the working directory to /home/yaya/INF8102_Project/Infrastructure/INF8102_Project/Infrastructure

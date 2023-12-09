@@ -6,7 +6,7 @@ exports.handler = async (event) => {
   const { fileName, fileType } = JSON.parse(event.body);
 
   const s3Params = {
-    Bucket: "inf8102-final-project-2023-11-07",
+    Bucket: "websiteinf8102-13",
     Key: fileName,
     Expires: 60,
     ContentType: fileType,

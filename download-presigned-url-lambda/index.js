@@ -5,7 +5,7 @@ exports.handler = async (event) => {
   const { fileName } = JSON.parse(event.body);
   try {
     const presignedUrl = s3.getSignedUrl("getObject", {
-      Bucket: "inf8102-final-project-2023-11-07",
+      Bucket: "websiteinf8102-13",
       Key: fileName,
       Expires: 60,
       ResponseContentDisposition: `attachment; filename="${fileName}"`,
